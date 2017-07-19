@@ -5,7 +5,8 @@ import {
     Text,
     View,
     StyleSheet,
-    ListView
+    ListView,
+    Image
 } from 'react-native';
 
 import Geocoder from 'react-native-geocoder';
@@ -13,11 +14,12 @@ import Geocoder from 'react-native-geocoder';
 const  API_KEY   = 'Bearer IZV34UMD6PUBJ2QJJWIW';
 const  API_URL = 'https://www.eventbriteapi.com/v3/events/search/';
 
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
 export default class Main extends Component {
     constructor(props) {
         super(props);
 
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataSource: ds.cloneWithRows([
                 {
@@ -48,20 +50,31 @@ export default class Main extends Component {
             })
                 .then((res) => res.json())
                 .then((resJson) => {
-                    console.log('this shit', resJson)
+                    this.setState({
+                        dataSource: ds.cloneWithRows(resJson.events)
+                    })
                 })
         });
     }
 
     renderRow(data) {
+        const defaultImg = 'https://c1.staticflickr.com/4/3532/3755130245_d3c61ac90a_b.jpg';
+        console.log('shit', data);
+        const img = data.logo !== null ? data.logo.url : defaultImg;
         return(
-            <View>
-                <Text>
-                    {data.name.text}
-                </Text>
-                <Text>
-                    {data.url}
-                </Text>
+            <View style={styles.row}>
+                <Image
+                    style={styles.logo}
+                    source={{uri: img}}
+                />
+                <View style={styles.details}>
+                    <Text>
+                        {data.name.text.length > 30 ? `${data.name.text.substring(0, 30)}...` : data.name.text}
+                    </Text>
+                    <Text>
+                        more details
+                    </Text>
+                </View>
             </View>
         )
     }
@@ -72,11 +85,13 @@ export default class Main extends Component {
                 <Text style={styles.title}>
                     this is shit
                 </Text>
-                <ListView
-                    style={styles.list}
-                    dataSource={this.state.dataSource}
-                    renderRow={(data) => this.renderRow(data)}
-                />
+                <View style={styles.list}>
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={(data) => this.renderRow(data)}
+                    />
+                </View>
+
             </View>
         )
     }
@@ -85,15 +100,35 @@ export default class Main extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     title: {
         flex: 1,
-        margin: 40
+        margin: 20,
+        fontSize: 18,
+        marginTop: 60,
+        textAlign: 'center'
+
     },
     list: {
-        flex: 1
+        flex: 8,
+    },
+    row: {
+        flex: 1,
+        flexDirection: 'row',
+        padding: 5
+
+    },
+    logo: {
+        flex: 1,
+        width: 50,
+        height: 50,
+        borderColor: 'black',
+        borderWidth: 1
+    },
+    details: {
+        flex: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 
 });
