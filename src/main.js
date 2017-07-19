@@ -8,7 +8,8 @@ import {
     ListView,
     Image,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    KeyboardAvoidingView,
 } from 'react-native';
 
 import Geocoder from 'react-native-geocoder';
@@ -28,7 +29,8 @@ export default class Main extends Component {
                     name: {
                         text: 'Event 1'
                     },
-                    url: 'www.bullshit.com'
+                    url: 'www.bullshit.com',
+                    logo: {}
                 }
             ]),
             city: '',
@@ -91,12 +93,14 @@ export default class Main extends Component {
                 </Text>
                 <View style={styles.form}>
                     <TextInput
+                        multiline
                         style={styles.input}
                         placeholder="enter type of event..."
                         underlineColorAndroid='rgba(0,0,0,0)'
                         onChangeText={(text) => this.setState({event: text})}
                     />
                     <TextInput
+                        multiline
                         style={styles.input}
                         placeholder="enter city..."
                         underlineColorAndroid='rgba(0,0,0,0)'
@@ -117,7 +121,6 @@ export default class Main extends Component {
                         renderRow={(data) => this.renderRow(data)}
                     />
                 </View>
-
             </View>
         )
     }
@@ -157,31 +160,38 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     form: {
-        flex: 3
+        flex: 4
     },
     input: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50,
         borderColor: 'black',
         borderRadius: 9,
         borderWidth: 1,
-        padding: 5,
         margin: 5,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: 16,
+        paddingTop: 12
 
     },
     buttonWrapper: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         borderColor: 'blue',
         borderWidth: 1,
         borderRadius: 9,
-        padding: 5,
-        margin: 5
+        margin: 5,
+        paddingTop: 5
     },
     button: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingTop: 5
 
     }
 
