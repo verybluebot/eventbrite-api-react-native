@@ -6,7 +6,9 @@ import {
     View,
     StyleSheet,
     ListView,
-    Image
+    Image,
+    TextInput,
+    TouchableOpacity
 } from 'react-native';
 
 import Geocoder from 'react-native-geocoder';
@@ -28,7 +30,9 @@ export default class Main extends Component {
                     },
                     url: 'www.bullshit.com'
                 }
-            ])
+            ]),
+            city: '',
+            event: ''
         }
     }
 
@@ -85,6 +89,28 @@ export default class Main extends Component {
                 <Text style={styles.title}>
                     this is shit
                 </Text>
+                <View style={styles.form}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="enter type of event..."
+                        underlineColorAndroid='rgba(0,0,0,0)'
+                        onChangeText={(text) => this.setState({event: text})}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="enter city..."
+                        underlineColorAndroid='rgba(0,0,0,0)'
+                        onChangeText={(text) => this.setState({city: text})}
+                    />
+                    <TouchableOpacity
+                        style={styles.buttonWrapper}
+                        onPress={() => this.getSearch(this.state.event, this.state.city)}
+                    >
+                        <Text style={styles.button}>
+                            Search
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.list}>
                     <ListView
                         dataSource={this.state.dataSource}
@@ -110,7 +136,7 @@ const styles = StyleSheet.create({
 
     },
     list: {
-        flex: 8,
+        flex: 9,
     },
     row: {
         flex: 1,
@@ -126,9 +152,37 @@ const styles = StyleSheet.create({
         borderWidth: 1
     },
     details: {
-        flex: 5,
+        flex: 3,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    form: {
+        flex: 3
+    },
+    input: {
+        flex: 1,
+        borderColor: 'black',
+        borderRadius: 9,
+        borderWidth: 1,
+        padding: 5,
+        margin: 5,
+        textAlign: 'center'
+
+    },
+    buttonWrapper: {
+        flex: 1,
+        borderColor: 'blue',
+        borderWidth: 1,
+        borderRadius: 9,
+        padding: 5,
+        margin: 5
+    },
+    button: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center'
+
     }
 
 });
