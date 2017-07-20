@@ -23,15 +23,7 @@ export default class Events extends Component {
         super(props);
 
         this.state = {
-            dataSource: ds.cloneWithRows([
-                {
-                    name: {
-                        text: 'Event 1'
-                    },
-                    url: 'www.bullshit.com',
-                    logo: {}
-                }
-            ]),
+            dataSource: ds.cloneWithRows([]),
             city: '',
             event: ''
         }
@@ -63,7 +55,6 @@ export default class Events extends Component {
     }
 
     onMoreDetails(eventData) {
-        console.log('this is data!!', eventData);
         this.props.navigation.navigate('EventDetails', eventData);
     }
 
@@ -134,6 +125,7 @@ export default class Events extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white'
     },
     title: {
         flex: 1,
