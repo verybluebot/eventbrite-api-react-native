@@ -27,5 +27,5 @@ NOTE: for ios this will build, open Xcode and run the app for Android you will n
 
 5. Enjoy :alien:
 
-## Lincence 
-[MIT]()
+## License 
+[MIT](https://github.com/verybluebot/eventbrite-api-react-native/blob/master/LICENSE.md)
