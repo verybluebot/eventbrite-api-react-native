@@ -63,7 +63,8 @@ export default class Events extends Component {
     }
 
     onMoreDetails(eventData) {
-        this.props.navigation.navigate('EventDetails', {...eventData});
+        console.log('this is data!!', eventData);
+        this.props.navigation.navigate('EventDetails', eventData);
     }
 
     renderRow(data) {
